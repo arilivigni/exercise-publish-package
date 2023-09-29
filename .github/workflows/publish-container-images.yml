@@ -2,7 +2,7 @@ name: publish
 on: [push]
 
 jobs:
-  publish-hello-docker-image:
+  publish-hello-docker-package-image:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -18,6 +18,6 @@ jobs:
     - name: Build the hello-docker Docker image
       run: |
              cd sample-packages/docker
-             docker build . --tag ghcr.io/deselikem/hello-docker-gcr-demo:latest
-             docker run ghcr.io/deselikem/hello-docker-gcr-demo:latest
-             docker push ghcr.io/deselikem/hello-docker-gcr-demo:latest
+             docker build . --tag ghcr.io/arilivigni/hello-docker-package-image:latest
+             docker push ghcr.io/arilivigni/hello-docker-package-image:latest
+             
