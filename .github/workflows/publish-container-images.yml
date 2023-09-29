@@ -22,10 +22,10 @@ jobs:
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
-        password: ${{ secrets.GH_PUBLISH_PACKAGES }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Build and push Docker image
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
       with:
         context: sample-packages/docker/.
         push: true
