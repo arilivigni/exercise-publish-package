@@ -1,23 +1,34 @@
 name: publish
 on: [push]
 
+env:
+  REGISTRY: ghcr.io
+  OWNER: ${{ github.repository_owner }}
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  publish-hello-docker-package-image:
+  build-and-push-image:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+    
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
-        registry: ghcr.io
+        registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     
-    - name: Build the hello-docker Docker image
-      run: |
-             cd sample-packages/docker
-             docker build . --tag ghcr.io/arilivigni/hello-docker-package-image:latest
-             docker push ghcr.io/arilivigni/hello-docker-package-image:latest
-             
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: sample-packages/docker/.
+        push: true
+        tags: ${{ env.OWNER }}/${{ env.IMAGE_NAME }}:latest
+  
