@@ -3,7 +3,6 @@ on: [push]
 
 env:
   REGISTRY: ghcr.io
-  OWNER: ${{ github.repository_owner }}
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -30,5 +29,5 @@ jobs:
       with:
         context: sample-packages/docker/.
         push: true
-        tags: ${{ env.OWNER }}/${{ env.IMAGE_NAME }}:latest
+        tags: ${{ env.IMAGE_NAME }}:latest
   
